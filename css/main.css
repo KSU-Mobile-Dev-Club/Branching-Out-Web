@@ -2372,10 +2372,11 @@ html, body, #mapsection, #mapsection .container {
 
 #main {
   width: calc(100% - 375px);
+  height: 100%;
 }
 
 #map {
-  height: 100%;
+  height: 95.5%;
 }
 
 @media screen and (max-width: 767px) {
