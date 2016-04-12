@@ -2371,7 +2371,6 @@ html, body, #mapsection, #mapsection .container {
 }
 
 #main {
-  width: calc(100% - 375px);
   height: 100%;
 }
 
