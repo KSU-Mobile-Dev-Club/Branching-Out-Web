@@ -59,6 +59,11 @@
 	<!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
 	<script src="js/main.js"></script>
 	<script src="js/ga.js"></script>
+	<script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+	<script>
+		Parse.initialize("TcxRgMwktldvVspKoslGldSSommdBFIByYZSgdgt");
+		Parse.serverURL = 'https://atodd.me:1337/parse'
+	</script>
 	<script>
 		var map;
 
@@ -71,12 +76,6 @@
 				zoom: 14
 			});
 
-			/*
-			var infoWindow = new google.maps.InfoWindow({
-				map: map
-			});
-			*/
-
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = {
@@ -86,7 +85,7 @@
 
 					var locMarker = new google.maps.Marker({
 						clickable: false,
-						icon: new google.maps.MarkerImage('https://lh6.ggpht.com/tWNo5Up_uB17_M-y92SYsp5aA2VTGKZpnnP67WYntAUm-HbnRUmpJ9R0Mz1oxoI=h18',
+						icon: new google.maps.MarkerImage('https://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
 							new google.maps.Size(22, 22),
 							new google.maps.Point(0, 18),
 							new google.maps.Point(11, 11)),
@@ -96,14 +95,11 @@
 					})
 
 					locMarker.setPosition(pos);
-					//infoWindow.setPosition(pos);
-					//infoWindow.setContent('Location found.');
 					map.setCenter(pos);
 				}, function() {
 					handleLocationError(true, infoWindow, map.getCenter());
 				});
 			} else {
-				// Browser doesn't support Geolocation
 				handleLocationError(false, infoWindow, map.getCenter());
 			}
 		}
@@ -115,9 +111,42 @@
 				'Error: Your browser doesn\'t support geolocation.');
 		}
 
+		var trees = Parse.Object.extend("trees");
+		var query = new Parse.Query(trees);
+		query.greaterThan("treeId", -1);
+		query.find({
+			success: function(results) {
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var loc = object.get('cord');
+					var marker = new google.maps.Marker({
+						position = {
+							lat: loc.latitude,
+							lng: loc.longitude
+						},
+						animation: google.maps.Animation.DROP,
+						map: map,
+						title: object.get('common')
+					});
+					marker.addListener('click', toggleBounce);
+				}
+			},
+			error: function(error) {
+				alert("Error: " + error.code + " " + error.message);
+			}
+		});
+
+		function toggleBounce() {
+			if (marker.getAnimation() !== null) {
+				marker.setAnimation(null);
+			} else {
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+			}
+		}
+
 		var header = document.getElementById("header");
 		var main = document.getElementById("main");
-		main.width = calc(100% -header);
+		main.width = calc(100 % -header);
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6YTt08vKFP35-nTVz89Ru2pWtQGUeINI&callback=initMap" async defer></script>
 </body>
