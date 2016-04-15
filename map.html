@@ -69,9 +69,12 @@
 				},
 				zoom: 14
 			});
+
+			/*
 			var infoWindow = new google.maps.InfoWindow({
 				map: map
 			});
+			*/
 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -113,7 +116,7 @@
 
 		var header = document.getElementById("header");
 		var main = document.getElementById("main");
-		main.width = calc(100 % -header);
+		main.width = calc(100% -header);
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6YTt08vKFP35-nTVz89Ru2pWtQGUeINI&callback=initMap" async defer></script>
 </body>
