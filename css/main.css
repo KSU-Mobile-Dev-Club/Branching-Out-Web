@@ -2582,6 +2582,13 @@ html, body, #mapsection, #mapsection .container {
   #main section.cover {
     padding: 4em 0;
   }
+  #trees .container, #mapsection .container {
+    padding: 0;
+    margin-top: -60px;
+  }
+  #mapsection .container header {
+    margin-bottom: 0;
+  }
 }
 
 
@@ -2628,5 +2635,8 @@ html, body, #mapsection, #mapsection .container {
   }
   #footer .copyright li:first-child {
     margin-top: 0;
+  }
+  #trees .container, #mapsection .container {
+    margin-top: -25px;
   }
 }
